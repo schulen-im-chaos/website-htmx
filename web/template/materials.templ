@@ -1,0 +1,56 @@
+package template
+
+import (
+	"htmx/db"
+)
+
+templ Materials(subjects []db.Subject) {
+	<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg mb-4">
+		<h2>Lernmaterialien</h2>
+		<p>Diese Lernmaterialien wurden von anderen Schüler*innen erstellt, um Inhalte auf eine verständliche Art und Weise kurz zu erklären.</p>
+		<p>Derzeit wirst Du hier noch nicht so viel finden und deshalb brauchen wir Deine Hilfe!</p>
+		<p>Hast Du eigene Lernzettel, die du mit anderen teilen willst? Dann geht's <a class="link link-hover" href="/materials/contribute" hx-boost="true" hx-indicator=".htmx-indicator">hier lang</a>!</p>
+	</article>
+	<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6" hx-boost="true" hx-indicator=".htmx-indicator">
+		for _, subject := range subjects {
+			<a class="btn btn-primary w-full" href={ templ.SafeURL("/materials/kind/" + subject.Name) }>{ subject.Name }</a>
+		}
+	</div>
+}
+
+templ MaterialGrades(kind string, sortedMaterial map[string][]db.Item) {
+	<div hx-boost="true" hx-indicator=".htmx-indicator">
+		<a class="btn btn-error mb-4" href="/materials">Zurück!</a>
+		<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg mb-4">
+			<h2>{ kind }</h2>
+			<p><strong>Achtung:</strong> Nachdem du auf eine der Dateien klickst, könnte es je nach deiner Internetgeschwindigkeit etwas länger dauern, bis die jeweilige Datei heruntergeladen ist. Wir bitten Dich deshalb um etwas Geduld.</p>
+			for kind, items := range sortedMaterial {
+				<h2>{ kind }</h2>
+				<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+					for _, item := range items {
+						<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
+							<div class="card-body">
+								<h2 class="card-title !mt-0 overflow-hidden">{ item.Title }</h2>
+								<p>{ item.Summary } von { item.Author }</p>
+								<div class="card-actions justify-end">
+									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			}
+		</article>
+	</div>
+}
+
+templ MaterialsContribute() {
+	<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg mb-4">
+		<h2>Lernmaterialien hinzufügen</h2>
+		<p>Du möchtest dem Projekt beitragen und eigene Lernzetteln anderen zur Verfügung stellen? Perfekt!</p>
+		<p>In Zukunft wirst du hier direkt deine Materialien zur Überprüfung durch unser Team hochladen können. Bis dahin schreibe uns bitte eine E-Mail (<a class="link" href="mailto:kontakt@schulenimchaos.de">kontakt@schulenimchaos.de</a>), zu der du die Dateien anhängst und Folgendes angibst:</p>
+		<ul><li>Titel</li> <li>Eine kurze Beschreibung</li> <li>Fach</li> <li>Klassenstufe und Bundesland</li> <li>Sprache (vor allem bei bilinugualen Inhalten relevant)</li></ul>
+		<p>Bitte beachte, dass die Inhalte nicht copyright-geschützt sein dürfen, sie müssen also entweder von dir selbst erstellt oder in public domain verfügbar sein.</p>
+		<p>Danke für Deinen Beitrag!</p>
+	</article>
+}
