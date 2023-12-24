@@ -9,7 +9,7 @@ templ Materials(subjects []db.Subject) {
 		<h2>Lernmaterialien</h2>
 		<p>Diese Lernmaterialien wurden von anderen Schüler*innen erstellt, um Inhalte auf eine verständliche Art und Weise kurz zu erklären.</p>
 		<p>Derzeit wirst Du hier noch nicht so viel finden und deshalb brauchen wir Deine Hilfe!</p>
-		<p>Hast Du eigene Lernzettel, die du mit anderen teilen willst? Dann geht's <a class="link link-hover" href="/materials/contribute" hx-boost="true" hx-indicator=".htmx-indicator">hier lang</a>!</p>
+		<p>Hast Du eigene Lernzettel, die du mit anderen teilen willst? Dann geht's <a class="link" href="/materials/contribute" hx-boost="true" hx-indicator=".htmx-indicator">hier lang</a>!</p>
 	</article>
 	<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6" hx-boost="true" hx-indicator=".htmx-indicator">
 		for _, subject := range subjects {
@@ -30,7 +30,7 @@ templ MaterialGrades(kind string, sortedMaterial map[string][]db.Item) {
 					for _, item := range items {
 						<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
 							<div class="card-body">
-								<h2 class="card-title !mt-0 overflow-hidden">{ item.Title }</h2>
+								<h3 class="card-title !mt-0 overflow-hidden">{ item.Title }</h3>
 								<p>{ item.Summary } von { item.Author }</p>
 								<div class="card-actions justify-end">
 									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
