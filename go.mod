@@ -1,18 +1,20 @@
 module htmx
 
-go 1.21.0
-
-require github.com/gin-gonic/gin v1.9.1
+go 1.21.5
 
 require (
-	github.com/a-h/templ v0.2.476 // indirect
+	github.com/a-h/templ v0.2.476
+	github.com/gin-gonic/gin v1.9.1
+	github.com/joho/godotenv v1.5.1
+	gorm.io/driver/sqlite v1.5.3
+	gorm.io/gorm v1.25.3
+)
+
+require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
-	gorm.io/driver/sqlite v1.5.3 // indirect
-	gorm.io/gorm v1.25.3 // indirect
 )
 
 require (
