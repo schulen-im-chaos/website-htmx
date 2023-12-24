@@ -45,7 +45,7 @@ templ MaterialGrades(kind string, sortedMaterial map[string][]db.Item) {
 }
 
 templ MaterialsContribute() {
-	<a class="btn btn-error mb-4" href="/materials">Zurück!</a>
+	<a class="btn btn-error mb-4" href="/materials" hx-boost="true" hx-indicator=".htmx-indicator">Zurück!</a>
 	<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg mb-4">
 		<h2>Lernmaterialien hinzufügen</h2>
 		<p>Du möchtest dem Projekt beitragen und eigene Lernzetteln anderen zur Verfügung stellen? Perfekt!</p>
