@@ -20,6 +20,9 @@ func main() {
 		println("Error:", err)
 	}
 
+	gin.SetMode(gin.ReleaseMode)
+	gin.Default().SetTrustedProxies([]string{})
+
 	router := gin.Default()
 	router.HTMLRender = &template.TemplRender{}
 
