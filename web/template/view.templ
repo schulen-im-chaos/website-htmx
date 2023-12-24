@@ -1,6 +1,10 @@
 package template
 
-templ Page(title string, content templ.Component) {
+import (
+	"github.com/gin-gonic/gin"
+)
+
+templ Page(c *gin.Context, title string, content templ.Component) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -12,7 +16,7 @@ templ Page(title string, content templ.Component) {
 			<link rel="icon" type="image/png" href="/favicon.png"/>
 		</head>
 		<body>
-			@Navbar()
+			@Navbar(c)
 			<div class="p-2 sm:px-10 sm:py-3 md:px-12 md:py-5 lg:p-12 lg:mx-auto lg:w-11/12 xl:p-14 xl:w-5/6">
 				@content
 			</div>
@@ -21,7 +25,7 @@ templ Page(title string, content templ.Component) {
 	</html>
 }
 
-templ Navbar() {
+templ Navbar(c *gin.Context) {
 	<nav hx-boost="true" hx-indicator=".htmx-indicator">
 		<div class="navbar bg-base-200">
 			<div class="navbar-start">
@@ -30,18 +34,28 @@ templ Navbar() {
 			</div>
 			<div class="navbar-end">
 				<div class=" hidden xl:flex">
-					<ul class="menu menu-horizontal">
-						<li><a href="/help">Wie funktioniert's?</a></li>
-						<li><a href="/materials">Lernmaterialien</a></li>
+					<ul class="menu menu-horizontal" w>
+						<li>
+							@a(c, "/help", "Wie funktioniert's?")
+						</li>
+						<li>
+							@a(c, "/materials", "Lernmaterialien")
+						</li>
 						<li>
 							<details>
 								<summary>
 									Über uns
 								</summary>
 								<ul class="p-2 bg-base-100 rounded-t-none">
-									<li><a href="/aim">Unser Ziel</a></li>
-									<li><a href="/team">Unser Team</a></li>
-									<li><a href="/contact">Kontakt</a></li>
+									<li>
+										@a(c, "/aim", "Unser Ziel")
+									</li>
+									<li>
+										@a(c, "/team", "Unser Team")
+									</li>
+									<li>
+										@a(c, "/contact", "Kontakt")
+									</li>
 								</ul>
 							</details>
 						</li>
@@ -53,14 +67,24 @@ templ Navbar() {
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path></svg>
 					</div>
 					<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-						<li><a href="/help">Wie funktioniert's?</a></li>
-						<li><a href="/materials">Lernmaterialien</a></li>
+						<li>
+							@a(c, "/help", "Wie funktioniert's?")
+						</li>
+						<li>
+							@a(c, "/materials", "Lernmaterialien")
+						</li>
 						<li>
 							<a>Über uns</a>
 							<ul class="p-2">
-								<li><a href="/aim">Unser Ziel</a></li>
-								<li><a href="/team">Unser Team</a></li>
-								<li><a href="/contact">Kontakt</a></li>
+								<li>
+									@a(c, "/aim", "Unser Ziel")
+								</li>
+								<li>
+									@a(c, "/team", "Unser Team")
+								</li>
+								<li>
+									@a(c, "/contact", "Kontakt")
+								</li>
 							</ul>
 						</li>
 						<a class="btn btn-accent m-2 no-animation" target="_blank" href={ DiscordURL }>Zum Discord Server!</a>
@@ -69,6 +93,15 @@ templ Navbar() {
 			</div>
 		</div>
 	</nav>
+}
+
+templ a(c *gin.Context, href string, content string) {
+	<a
+ 		href={ templ.SafeURL(href) }
+ 		if c.FullPath() == href {
+			class="active"
+		}
+	>{ content }</a>
 }
 
 templ Footer() {

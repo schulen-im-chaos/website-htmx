@@ -15,7 +15,7 @@ func GetMaterials(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "", template.Page("Lernmaterialien", template.Materials(subjects)))
+	c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien", template.Materials(subjects)))
 }
 
 func GetMaterialsGrades(c *gin.Context) {
@@ -35,5 +35,5 @@ func GetMaterialsGrades(c *gin.Context) {
 
 	// fmt.Println(items)
 
-	c.HTML(http.StatusOK, "", template.Page("Lernmaterialien", template.MaterialGrades(subject.Name, items)))
+	c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien", template.MaterialGrades(subject.Name, items)))
 }

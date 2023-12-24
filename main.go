@@ -45,19 +45,23 @@ func main() {
 	router.StaticFile("/favicon.png", "./static/favicon.png")
 
 	// web
-	router.GET("/", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page("Schulen im Chaos", template.Index())) })
-	router.GET("/help", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page("Wie funktioniert's?", template.Help())) })
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "", template.Page(c, "Schulen im Chaos", template.Index()))
+	})
+	router.GET("/help", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "", template.Page(c, "Wie funktioniert's?", template.Help()))
+	})
 	router.GET("/materials", web.GetMaterials)
 	router.GET("/materials/kind/:name", web.GetMaterialsGrades)
 	router.GET("/materials/contribute", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "", template.Page("Lernmaterialien Hinzufügen", template.MaterialsContribute()))
+		c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien Hinzufügen", template.MaterialsContribute()))
 	})
-	router.GET("/aim", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page("Unser Ziel", template.Aim())) })
-	router.GET("/team", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page("Unser Team", template.Team())) })
-	router.GET("/contact", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page("Kontakt", template.Contact())) })
-	router.GET("/legal/imprint", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page("Impressum", template.Imprint())) })
+	router.GET("/aim", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page(c, "Unser Ziel", template.Aim())) })
+	router.GET("/team", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page(c, "Unser Team", template.Team())) })
+	router.GET("/contact", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page(c, "Kontakt", template.Contact())) })
+	router.GET("/legal/imprint", func(c *gin.Context) { c.HTML(http.StatusOK, "", template.Page(c, "Impressum", template.Imprint())) })
 	router.GET("/legal/data-protection", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "", template.Page("Datenschutz", template.DataProtection()))
+		c.HTML(http.StatusOK, "", template.Page(c, "Datenschutz", template.DataProtection()))
 	})
 
 	// api
