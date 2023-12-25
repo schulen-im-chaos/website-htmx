@@ -26,15 +26,48 @@ templ Page(c *gin.Context, title string, content templ.Component) {
 }
 
 templ Navbar(c *gin.Context) {
+	<style type="text/css">
+		.htmx-indicator {
+			z-index: 99999;
+			display: none;
+			height: 3px;
+			width: 0;
+			transition: width 2s ease-out;
+		}
+
+		.htmx-request .htmx-indicator {
+			display: block;
+			animation: increaseSize 2.5s ease-out forwards;
+		}
+		.htmx-request.htmx-indicator {
+			display: block;
+			animation: increaseSize 2.5s ease-out forwards;
+		}
+
+		@keyframes increaseSize {
+			0% {
+				width: 0;
+			}
+			20% {
+				width: 10%;
+			}
+			70% {
+				width: 15%;
+			}
+			100% {
+				width: 100%;
+			}
+		}
+	</style>
 	<nav hx-boost="true" hx-indicator=".htmx-indicator">
+		<div class="fixed top-0 left-0 w-full bg-base-content htmx-indicator"></div>
 		<div class="navbar bg-base-200">
 			<div class="navbar-start">
 				<a class="btn btn-ghost text-xl no-animation pl-0 pr-2" href="/"><img width="48" height="48" src="/favicon.png" alt="Favicon"/> Schulen im Chaos</a>
-				<span class="loading loading-infinity loading-lg htmx-indicator align-center"></span>
 			</div>
 			<div class="navbar-end">
 				<div class=" hidden xl:flex">
-					<ul class="menu menu-horizontal" w>
+					<ul class="menu menu-horizontal">
 						<li>
 							@a(c, "/help", "Wie funktioniert's?")
 						</li>
