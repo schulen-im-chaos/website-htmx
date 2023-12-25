@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"htmx/db"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -61,6 +62,10 @@ func DeleteItem(c *gin.Context) {
 
 func DeleteLogin(c *gin.Context) {
 	id := c.Param("id")
+	if id == os.Getenv("ADMIN_USERNAME") {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Cannot Delete Admin!"})
+		return
+	}
 
 	login, err := db.DeleteLogin(id)
 	if err != nil {

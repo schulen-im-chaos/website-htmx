@@ -1,10 +1,5 @@
 package db
 
-import (
-	"fmt"
-	"os"
-)
-
 type Permission int64
 
 const (
@@ -36,9 +31,6 @@ func AddLogin(newLogin *Login) error {
 
 func DeleteLogin(user string) (Login, error) {
 	var login Login
-	if user == os.Getenv("ADMIN_USERNAME") {
-		return login, fmt.Errorf("Error: Cannot delete Admin")
-	}
 	rs := db.Where("user = ?", user).Delete(&login)
 	return login, rs.Error
 }
