@@ -10,7 +10,7 @@ templ Materials(subjects []db.Subject) {
 		<p>Diese Lernmaterialien wurden von anderen Schüler*innen erstellt, um Inhalte auf eine verständliche Art und Weise kurz zu erklären.</p>
 		<p>Derzeit wirst Du hier noch nicht so viel finden und deshalb brauchen wir Deine Hilfe!</p>
 		<p>Hast Du eigene Lernzettel, die du mit anderen teilen willst? Dann geht's <a class="link" href="/materials/contribute" hx-boost="true" hx-indicator=".htmx-indicator">hier lang</a>!</p>
-		<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6" hx-boost="true" hx-indicator=".htmx-indicator">
+		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-6" hx-boost="true" hx-indicator=".htmx-indicator">
 			for _, subject := range subjects {
 				<a class="btn btn-primary w-full" href={ templ.SafeURL("/materials/kind/" + subject.Name) }>{ subject.Name }</a>
 			}
@@ -26,7 +26,7 @@ templ MaterialGrades(kind string, sortedMaterial map[string][]db.Item) {
 			<p><strong>Achtung:</strong> Nachdem du auf eine der Dateien klickst, könnte es je nach deiner Internetgeschwindigkeit etwas länger dauern, bis die jeweilige Datei heruntergeladen ist. Wir bitten Dich deshalb um etwas Geduld.</p>
 			for kind, items := range sortedMaterial {
 				<h2>{ kind }</h2>
-				<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+				<div class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
 					for _, item := range items {
 						<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
 							<div class="card-body">
