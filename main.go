@@ -74,5 +74,9 @@ func main() {
 	router.POST("/login", api.AuthMiddleware(api.AdminWrite), api.PostLogin)
 	router.DELETE("/login/:id", api.AuthMiddleware(api.AdminWrite), api.DeleteLogin)
 
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusOK, "", template.Page(c, "404 Page Not Found", template.NotFound()))
+	})
+
 	router.Run("localhost:8080")
 }
