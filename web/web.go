@@ -21,13 +21,7 @@ func GetMaterials(c *gin.Context) {
 func GetMaterialsGrades(c *gin.Context) {
 	name := c.Param("name")
 
-	subject, err := db.FetchSubjectByName(name)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-		return
-	}
-
-	c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien - "+name, template.MaterialGrades(subject.Name)))
+	c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien - "+name, template.MaterialGrades(name)))
 }
 
 func PostMaterialsGrades(c *gin.Context) {

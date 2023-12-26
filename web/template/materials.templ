@@ -46,9 +46,16 @@ templ MaterialGradesSearch(sortedMaterial map[string][]db.Item) {
 				<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
 					<div class="card-body">
 						<h3 class="card-title !mt-0 overflow-hidden">{ item.Title }</h3>
-						<p>{ item.Summary } von { item.Author }</p>
-						<div class="card-actions justify-end">
-							<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
+						<p>{ item.Summary }</p>
+						<div class="card-actions justify-between">
+							<div class="badge badge-outline place-self-center">Von { item.Author }</div>
+							if item.Comment == "" {
+								<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
+							} else {
+								<div class="tooltip" data-tip={ item.Comment }>
+									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
+								</div>
+							}
 						</div>
 					</div>
 				</div>

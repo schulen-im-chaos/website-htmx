@@ -9,8 +9,8 @@ func ItemsBySubjectAndGradeMap(subjectName string, query string) (map[string][]I
 	rs := db.
 		Joins("JOIN subjects ON items.subject_name = subjects.name").
 		Where("subjects.name = ?", subjectName).
-		Where("items.title LIKE ? OR items.grade_name LIKE ? OR items.author LIKE ?", "%"+query+"%", "%"+query+"%", "%"+query+"%").
-		Order("items.title asc").
+		Where("items.grade_name LIKE ? OR items.title LIKE ? OR items.author LIKE ? OR items.summary LIKE ?", "%"+query+"%", "%"+query+"%", "%"+query+"%", "%"+query+"%").
+		Order("items.grade_name asc, items.title asc, items.author asc, items.summary asc").
 		Find(&items)
 
 	if rs.Error != nil {
