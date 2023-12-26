@@ -25,13 +25,8 @@ func ImportFiles() error {
 				return err
 			}
 
-			if len(Subjects) == 0 {
+			if !FindStringInArray(Subjects, resource.Subject) {
 				Subjects = append(Subjects, resource.Subject)
-			} else {
-				found := FindStringInArray(Subjects, resource.Subject)
-				if !found {
-					Subjects = append(Subjects, resource.Subject)
-				}
 			}
 
 			Resources = append(Resources, resource)
