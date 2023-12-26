@@ -22,6 +22,7 @@ func main() {
 	router.HTMLRender = &template.TemplRender{}
 
 	// server files
+	router.Static("/files", "./files")
 	router.Static("/static", "./static")
 	router.StaticFile("/favicon.png", "./static/favicon.png")
 

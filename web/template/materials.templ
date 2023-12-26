@@ -48,10 +48,10 @@ templ MaterialGradesResults(sortedMaterial map[string][]mem.Resource) {
 						<div class="card-actions justify-between">
 							<div class="badge badge-outline place-self-center">Von { resource.Author }</div>
 							if resource.Comment == "" {
-								<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
+								<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
 							} else {
 								<div class="tooltip" data-tip={ resource.Comment }>
-									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
+									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
 								</div>
 							}
 						</div>
