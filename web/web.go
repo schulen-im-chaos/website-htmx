@@ -27,7 +27,7 @@ func GetMaterialsGrades(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien", template.MaterialGrades(subject.Name)))
+	c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien - "+name, template.MaterialGrades(subject.Name)))
 }
 
 func PostMaterialsGrades(c *gin.Context) {
