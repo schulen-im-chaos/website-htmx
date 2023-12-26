@@ -10,11 +10,12 @@ var Subjects []string
 var Resources []Resource
 
 func ImportFiles() error {
-	err := filepath.Walk("./files", func(path string, info os.FileInfo, err error) error {
+	err := filepath.WalkDir("./files", func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() && filepath.Ext(path) == ".json" {
+
+		if !d.IsDir() && filepath.Ext(path) == ".json" {
 			fileData, err := os.ReadFile(path)
 			if err != nil {
 				return err
@@ -31,6 +32,7 @@ func ImportFiles() error {
 
 			Resources = append(Resources, resource)
 		}
+
 		return nil
 	})
 
