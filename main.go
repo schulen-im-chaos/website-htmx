@@ -2,19 +2,17 @@ package main
 
 import (
 	"fmt"
-	"htmx/api"
-	"htmx/db"
+	"htmx/mem"
 	"htmx/web"
 	"htmx/web/template"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := db.Open()
+	err := mem.ImportFiles()
 
 	if err != nil {
 		println("Error:", err)
@@ -33,16 +31,6 @@ func main() {
 		return
 	}
 
-	// adding admin from env
-	db.DeleteLogin(os.Getenv("ADMIN_USERNAME"))
-	db.AddLogin(&db.Login{
-		User:     os.Getenv("ADMIN_USERNAME"),
-		Password: os.Getenv("ADMIN_PASSWORD"),
-		Permission: db.Permissions{
-			AccessAdmin: db.Write,
-		},
-	})
-
 	// server files
 	router.Static("/static", "./static")
 	router.StaticFile("/favicon.png", "./static/favicon.png")
@@ -54,7 +42,10 @@ func main() {
 	router.GET("/help", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "", template.Page(c, "Wie funktioniert's?", template.Help()))
 	})
-	router.GET("/materials", web.GetMaterials)
+	router.GET("/materials", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien", template.Materials(mem.Subjects)))
+
+	})
 	router.GET("/materials/kind/:name", web.GetMaterialsGrades)
 	router.POST("/materials/kind/:name", web.PostMaterialsGrades)
 	router.GET("/materials/contribute", func(c *gin.Context) {
@@ -67,12 +58,6 @@ func main() {
 	router.GET("/legal/data-protection", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "", template.Page(c, "Datenschutz", template.DataProtection()))
 	})
-
-	// api
-	router.POST("/item", api.AuthMiddleware(api.AdminWrite), api.PostItem)
-	router.DELETE("/item/:id", api.AuthMiddleware(api.AdminWrite), api.DeleteItem)
-	router.POST("/login", api.AuthMiddleware(api.AdminWrite), api.PostLogin)
-	router.DELETE("/login/:id", api.AuthMiddleware(api.AdminWrite), api.DeleteLogin)
 
 	router.NoRoute(func(c *gin.Context) {
 		c.HTML(http.StatusOK, "", template.Page(c, "404 Page Not Found", template.NotFound()))
