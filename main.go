@@ -56,6 +56,7 @@ func main() {
 	})
 	router.GET("/materials", web.GetMaterials)
 	router.GET("/materials/kind/:name", web.GetMaterialsGrades)
+	router.POST("/materials/kind/:name", web.PostMaterialsGrades)
 	router.GET("/materials/contribute", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien Hinzufügen", template.MaterialsContribute()))
 	})
