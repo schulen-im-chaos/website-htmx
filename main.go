@@ -1,19 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"htmx/mem"
 	"htmx/web"
 	"htmx/web/template"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func main() {
 	err := mem.ImportFiles()
-
 	if err != nil {
 		println("Error:", err)
 	}
@@ -23,13 +20,6 @@ func main() {
 
 	router := gin.Default()
 	router.HTMLRender = &template.TemplRender{}
-
-	// load env
-	err = godotenv.Load()
-	if err != nil {
-		fmt.Println("Error loading .env file")
-		return
-	}
 
 	// server files
 	router.Static("/static", "./static")
@@ -59,6 +49,7 @@ func main() {
 		c.HTML(http.StatusOK, "", template.Page(c, "Datenschutz", template.DataProtection()))
 	})
 
+	// 404
 	router.NoRoute(func(c *gin.Context) {
 		c.HTML(http.StatusOK, "", template.Page(c, "404 Page Not Found", template.NotFound()))
 	})
