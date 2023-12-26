@@ -18,30 +18,56 @@ templ Materials(subjects []db.Subject) {
 	</article>
 }
 
-templ MaterialGrades(kind string, sortedMaterial map[string][]db.Item) {
-	<div hx-boost="true" hx-indicator=".htmx-indicator">
-		<a class="btn btn-error mb-4" href="/materials">Zurück!</a>
-		<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg mb-4">
-			<h2>{ kind }</h2>
-			<p><strong>Achtung:</strong> Nachdem du auf eine der Dateien klickst, könnte es je nach deiner Internetgeschwindigkeit etwas länger dauern, bis die jeweilige Datei heruntergeladen ist. Wir bitten Dich deshalb um etwas Geduld.</p>
-			for kind, items := range sortedMaterial {
-				<h2>{ kind }</h2>
-				<div class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-					for _, item := range items {
-						<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
-							<div class="card-body">
-								<h3 class="card-title !mt-0 overflow-hidden">{ item.Title }</h3>
-								<p>{ item.Summary } von { item.Author }</p>
-								<div class="card-actions justify-end">
+templ MaterialGrades(kind string) {
+	<a class="btn btn-error mb-4" href="/materials" hx-boost="true" hx-indicator=".htmx-indicator">Zurück!</a>
+	<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg mb-4">
+		<h2>{ kind }</h2>
+		<p><strong>Achtung:</strong> Nachdem du auf eine der Dateien klickst, könnte es je nach deiner Internetgeschwindigkeit etwas länger dauern, bis die jeweilige Datei heruntergeladen ist. Wir bitten Dich deshalb um etwas Geduld.</p>
+		<input
+ 			id="search"
+ 			class="input input-bordered join-item w-full"
+ 			type="search"
+ 			name="q"
+ 			placeholder="Gib hier einen Suchbegriff ein..."
+ 			hx-post={ string(templ.SafeURL("/materials/kind/" + kind)) }
+ 			hx-trigger="input changed delay:500ms, search, load"
+ 			hx-target="#search-results"
+ 			hx-indicator=".htmx-indicator"
+		/>
+		<div id="search-results"></div>
+	</article>
+}
+
+templ MaterialGradesSearch(sortedMaterial map[string][]db.Item) {
+	for kind, items := range sortedMaterial {
+		<h2 class="!mt-2">{ kind }</h2>
+		<div class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+			for _, item := range items {
+				<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
+					<div class="card-body">
+						<h3 class="card-title !mt-0 overflow-hidden">{ item.Title }</h3>
+						<p>{ item.Summary }</p>
+						<div class="card-actions justify-between">
+							<div class="badge badge-outline place-self-center">Von { item.Author }</div>
+							if item.Comment == "" {
+								<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
+							} else {
+								<div class="tooltip" data-tip={ item.Comment }>
 									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/static/files/" + item.GradeName + "/" + item.SubjectName + "/" + item.FileName) }>Öffnen!</a>
 								</div>
-							</div>
+							}
 						</div>
-					}
+					</div>
 				</div>
 			}
-		</article>
-	</div>
+		</div>
+	}
+	if len(sortedMaterial) == 0 {
+		<div role="alert" class="alert mt-2">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-primary shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+			<span>Keine Suchergebnisse!</span>
+		</div>
+	}
 }
 
 templ MaterialsContribute() {

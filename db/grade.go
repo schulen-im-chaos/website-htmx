@@ -4,12 +4,13 @@ type Grade struct {
 	Name string `gorm:"primaryKey" json:"name" form:"name"`
 }
 
-func ItemsBySubjectAndGradeMap(subjectName string) (map[string][]Item, error) {
+func ItemsBySubjectAndGradeMap(subjectName string, query string) (map[string][]Item, error) {
 	var items []Item
 	rs := db.
 		Joins("JOIN subjects ON items.subject_name = subjects.name").
 		Where("subjects.name = ?", subjectName).
-		Order("items.title asc").
+		Where("items.grade_name LIKE ? OR items.title LIKE ? OR items.author LIKE ? OR items.summary LIKE ?", "%"+query+"%", "%"+query+"%", "%"+query+"%", "%"+query+"%").
+		Order("items.grade_name asc, items.title asc, items.author asc, items.summary asc").
 		Find(&items)
 
 	if rs.Error != nil {
