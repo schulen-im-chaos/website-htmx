@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"htmx/mem"
 	"htmx/web"
 	"htmx/web/template"
@@ -10,6 +11,11 @@ import (
 )
 
 func main() {
+	// flags
+	address := flag.String("a", "localhost:8080", "Address of the server")
+	flag.Parse()
+
+	// startup
 	err := mem.ImportFiles()
 	if err != nil {
 		println("Error:", err)
@@ -55,5 +61,5 @@ func main() {
 		c.HTML(http.StatusOK, "", template.Page(c, "404 Page Not Found", template.NotFound()))
 	})
 
-	router.Run("localhost:5000")
+	router.Run(*address)
 }
