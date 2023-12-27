@@ -8,8 +8,9 @@ type Resource struct {
 	Comment  string `json:"comment"`
 	Subject  string `json:"subject"`
 	Grade    string `json:"grade"`
-	FileName string `json:"file_name"`
 	Author   string `json:"author"`
+	FileName string `json:"file_name"`
+	Year     string `json:"year"`
 }
 
 func ResourcesBySubjectAndGradeMap(subjectName string, query string) map[string][]Resource {
@@ -25,6 +26,7 @@ func ResourcesBySubjectAndGradeMap(subjectName string, query string) map[string]
 				if strings.Contains(strings.ToLower(resource.Grade), query) ||
 					strings.Contains(strings.ToLower(resource.Title), query) ||
 					strings.Contains(strings.ToLower(resource.Author), query) ||
+					strings.Contains(strings.ToLower(resource.Year), query) ||
 					strings.Contains(strings.ToLower(resource.Summary), query) {
 					filteredResources[resource.Grade] = append(filteredResources[resource.Grade], resource)
 				}

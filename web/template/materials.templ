@@ -48,7 +48,12 @@ templ MaterialGradesResults(sortedMaterial map[string][]mem.Resource) {
 			for _, resource := range resources {
 				<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
 					<div class="card-body">
-						<h3 class="card-title !mt-0 overflow-hidden">{ resource.Title }</h3>
+						<h3 class="card-title !mt-0 overflow-scroll justify-between">
+							{ resource.Title }
+							<div class="badge badge-secondary">
+								{ resource.Year }
+							</div>
+						</h3>
 						<p>{ resource.Summary }</p>
 						<div class="card-actions justify-between">
 							<div class="inline-flex items-center justify-center place-self-center">
