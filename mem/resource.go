@@ -17,7 +17,7 @@ func ResourcesBySubjectAndGradeMap(subjectName string, query string) map[string]
 
 	filteredResources := make(map[string][]Resource)
 
-	for _, resource := range Resources {
+	for _, resource := range Global.Resources {
 		if resource.Subject == subjectName {
 			if query == "" {
 				filteredResources[resource.Grade] = append(filteredResources[resource.Grade], resource)

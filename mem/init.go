@@ -6,8 +6,12 @@ import (
 	"path/filepath"
 )
 
-var Subjects []string
-var Resources []Resource
+type Database struct {
+	Subjects  []string
+	Resources []Resource
+}
+
+var Global Database
 
 func ImportFiles() error {
 	err := filepath.WalkDir("./files", func(path string, d os.DirEntry, err error) error {
@@ -26,11 +30,11 @@ func ImportFiles() error {
 				return err
 			}
 
-			if !FindStringInArray(Subjects, resource.Subject) {
-				Subjects = append(Subjects, resource.Subject)
+			if !FindStringInArray(Global.Subjects, resource.Subject) {
+				Global.Subjects = append(Global.Subjects, resource.Subject)
 			}
 
-			Resources = append(Resources, resource)
+			Global.Resources = append(Global.Resources, resource)
 		}
 
 		return nil

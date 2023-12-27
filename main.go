@@ -34,7 +34,7 @@ func main() {
 		c.HTML(http.StatusOK, "", template.Page(c, "Wie funktioniert's?", template.Help()))
 	})
 	router.GET("/materials", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien", template.Materials(mem.Subjects)))
+		c.HTML(http.StatusOK, "", template.Page(c, "Lernmaterialien", template.Materials(mem.Global.Subjects)))
 
 	})
 	router.GET("/materials/kind/:name", web.GetMaterialsGrades)
