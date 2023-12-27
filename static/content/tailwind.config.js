@@ -5,7 +5,15 @@ module.exports = {
     extend: {},
   },
   daisyui: {
-    themes: ["light", "dark"],
+    themes: [
+      {
+        dark: {
+          ...require("daisyui/src/theming/themes")["dark"],
+          "base-content": "rgb(226 232 240)",
+          "neutral-content": "rgb(226 232 240)",
+        },
+      },
+    ],
   },
   plugins: [
     require("@tailwindcss/typography"),
