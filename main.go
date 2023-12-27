@@ -2,10 +2,10 @@ package main
 
 import (
 	"flag"
-	"htmx/mem"
-	"htmx/web"
-	"htmx/web/template"
 	"net/http"
+	"website/mem"
+	"website/web"
+	"website/web/template"
 
 	"github.com/gin-gonic/gin"
 )

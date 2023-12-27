@@ -1,9 +1,9 @@
 package web
 
 import (
-	"htmx/mem"
-	"htmx/web/template"
 	"net/http"
+	"website/mem"
+	"website/web/template"
 
 	"github.com/gin-gonic/gin"
 )
