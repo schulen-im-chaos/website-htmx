@@ -56,7 +56,7 @@ templ MaterialGradesResults(sortedMaterial map[string][]mem.Resource) {
 							if resource.Comment == "" {
 								<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
 							} else {
-								<div class="tooltip" data-tip={ resource.Comment }>
+								<div class="tooltip tooltip-left sm:tooltip-top" data-tip={ resource.Comment }>
 									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
 								</div>
 							}
