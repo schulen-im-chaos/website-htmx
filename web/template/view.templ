@@ -1,6 +1,8 @@
 package template
 
 import (
+	"fmt"
+	"time"
 	"github.com/gin-gonic/gin"
 )
 
@@ -58,13 +60,13 @@ templ Navbar(c *gin.Context) {
 	</style>
 	<nav hx-boost="true" hx-indicator=".htmx-indicator">
 		<div class="fixed top-0 left-0 w-full bg-base-content htmx-indicator"></div>
-		<div class="navbar bg-base-200">
+		<div class="navbar bg-base-200 lg:px-10">
 			<div class="navbar-start">
-				<a class="btn btn-ghost text-xl no-animation pl-0 pr-2" href="/"><img width="48" height="48" src="/favicon.png" alt="Favicon"/> Schulen im Chaos</a>
+				<a class="btn btn-ghost text-2xl no-animation pl-0 pr-2" href="/"><img width="48" height="48" src="/favicon.png" alt="Favicon"/> Schulen im Chaos</a>
 			</div>
 			<div class="navbar-end">
 				<div class=" hidden xl:flex">
-					<ul class="menu menu-horizontal text-base">
+					<ul class="menu menu-horizontal text-xl">
 						<li>
 							@a(c, "/help", "Wie funktioniert's?")
 						</li>
@@ -136,10 +138,10 @@ templ a(c *gin.Context, href string, content string) {
 
 templ Footer() {
 	<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
-	<footer class="footer p-10 bg-base-100 text-base-content">
+	<footer class="footer p-10 bg-base-100 text-base-content lg:text-lg">
 		<aside>
 			<img width="48" height="48" src="/favicon.png" alt="Favicon"/>
-			<p>© 2023 Schulen im Chaos</p>
+			<p>© 2023-{ fmt.Sprintf("%d", time.Now().Year()) } Schulen im Chaos</p>
 		</aside>
 		<nav hx-boost="true" hx-indicator=".htmx-indicator">
 			<header class="footer-title">Schulen im Chaos</header>

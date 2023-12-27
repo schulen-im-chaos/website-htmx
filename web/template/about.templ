@@ -18,7 +18,7 @@ templ Team() {
 		<h2>Wer sind wir?</h2>
 		<p>Wir sind ein Team aus sieben Personen, welche aus den verschiedensten Teilen Deutschlands kommen.</p>
 		<p>Hier stellen wir uns kurz vor:</p>
-		<div class="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+		<div class="grid md:grid-cols-2 2xl:grid-cols-3 gap-6">
 			<div class="card w-fit bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
 				<figure class="!m-0"><img src="static/img/team/nico.png" alt="Nico"/></figure>
 				<div class="card-body">
@@ -76,6 +76,6 @@ templ Team() {
 templ Contact() {
 	<article class="prose max-w-none prose-sm md:prose-base lg:prose-lg">
 		<h2>Kontakt</h2>
-		<p>Du kannst uns gerne unter <a class="link" href="mailto:kontakt@schulenimchaos.de">kontakt@schulenimchaos.de</a> kontaktieren oder einfach auf <a class="link" target="_blank" href="https://discord.com">Discord</a> ansprechen.</p>
+		<p>Du kannst uns gerne unter <a class="link" href="mailto:kontakt@schulenimchaos.de">kontakt@schulenimchaos.de</a> kontaktieren oder einfach auf <a class="link" target="_blank" href={ DiscordURL }>Discord</a> ansprechen.</p>
 	</article>
 }
