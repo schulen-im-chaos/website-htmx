@@ -44,7 +44,7 @@ templ MaterialGrades(kind string) {
 templ MaterialGradesResults(sortedMaterial map[string][]mem.Resource) {
 	for kind, resources := range sortedMaterial {
 		<h2 class="!mt-2">{ kind }</h2>
-		<div class="grid sm:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-6">
+		<div class="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
 			for _, resource := range resources {
 				<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
 					<div class="card-body">
