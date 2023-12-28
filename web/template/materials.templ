@@ -23,12 +23,17 @@ templ Materials(subjects []string) {
 }
 
 templ MaterialGrades(kind string) {
-	<a class="btn btn-error mb-4 text-base" href="/materials" hx-boost="true" hx-indicator=".indicator">Zurück zur Fächerübersicht!</a>
 	<article class="prose max-w-none prose-base lg:prose-lg mb-4">
-		<h2>{ kind }</h2>
+		<a class="btn btn-error text-base" href="/materials" hx-boost="true" hx-indicator=".indicator">Zurück zur Fächerübersicht!</a>
+		<h2 class="!mt-2">{ kind }</h2>
+		<p>
+			<strong>Achtung:</strong>
+			Die Suchergebnisse sind nach Klassenstufe sortiert. 
+			Suchen kannst du entweder nach der Klasse, Titel, Autor, Jahr oder Beschreibung der Materialien.
+		</p>
 		<input
  			id="search"
- 			class="input input-bordered w-full join-item"
+ 			class="input input-bordered w-full mb-4"
  			type="search"
  			name="q"
  			placeholder="Gib hier einen Suchbegriff ein..."
@@ -83,9 +88,9 @@ templ MaterialGradesResults(sortedMaterial map[string][]mem.Resource) {
 }
 
 templ MaterialsContribute() {
-	<a class="btn btn-error mb-4 text-lg" href="/materials" hx-boost="true" hx-indicator=".indicator">Zurück!</a>
 	<article class="prose max-w-none prose-base lg:prose-lg mb-4">
-		<h2>Lernmaterialien hinzufügen</h2>
+		<a class="btn btn-error text-base" href="/materials" hx-boost="true" hx-indicator=".indicator">Zurück!</a>
+		<h2 class="!mt-2">Lernmaterialien hinzufügen</h2>
 		<p>Du möchtest dem Projekt beitragen und eigene Lernzetteln anderen zur Verfügung stellen? Perfekt!</p>
 		<p>In Zukunft wirst du hier direkt deine Materialien zur Überprüfung durch unser Team hochladen können. Bis dahin schreibe uns bitte eine E-Mail (<a class="link" href="mailto:kontakt@schulenimchaos.de">kontakt@schulenimchaos.de</a>), zu der du die Dateien anhängst und Folgendes angibst:</p>
 		<ul><li>Titel</li> <li>Eine kurze Beschreibung</li> <li>Fach</li> <li>Klassenstufe und Bundesland</li> <li>Sprache (vor allem bei bilinugualen Inhalten relevant)</li></ul>
