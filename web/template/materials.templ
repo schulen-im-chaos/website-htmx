@@ -1,0 +1,100 @@
+package template
+
+import "website/mem"
+
+templ Materials(subjects []string) {
+	<article class="prose max-w-none prose-base lg:prose-lg mb-4">
+		<h2>Lernmaterialien</h2>
+		<p>Diese Lernmaterialien wurden von anderen Schüler*innen erstellt, um Inhalte auf eine verständliche Art und Weise kurz zu erklären.</p>
+		<p>Derzeit wirst Du hier noch nicht so viel finden und deshalb brauchen wir Deine Hilfe!</p>
+		<p>Hast Du eigene Lernzettel, die du mit anderen teilen willst? Dann geht's <a class="link" href="/materials/contribute" hx-boost="true" hx-indicator=".indicator">hier lang</a>!</p>
+		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-6" hx-boost="true" hx-indicator=".indicator">
+			for _, subject := range subjects {
+				<a class="btn btn-primary w-full text-base" href={ templ.SafeURL("/materials/kind/" + subject) }>{ subject }</a>
+			}
+		</div>
+		if len(subjects) == 0 {
+			<div role="alert" class="alert alert-warning mt-2">
+				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+				<span>Noch keine Lernmaterialien!</span>
+			</div>
+		}
+	</article>
+}
+
+templ MaterialGrades(kind string) {
+	<article class="prose max-w-none prose-base lg:prose-lg mb-4">
+		<a class="btn btn-error text-base" href="/materials" hx-boost="true" hx-indicator=".indicator">Zurück zur Fächerübersicht!</a>
+		<h2 class="!mt-2">{ kind }</h2>
+		<p>
+			<strong>Achtung:</strong>
+			Die Suchergebnisse sind nach Klassenstufe sortiert. 
+			Suchen kannst du entweder nach der Klasse, Titel, Schule, Jahr oder Beschreibung der Materialien.
+		</p>
+		<input
+ 			id="search"
+ 			class="input input-bordered w-full mb-4"
+ 			type="search"
+ 			name="q"
+ 			placeholder="Gib hier einen Suchbegriff ein..."
+ 			hx-post={ string(templ.SafeURL("/materials/kind/" + kind)) }
+ 			hx-trigger="input changed delay:500ms, search, load"
+ 			hx-target="#search-results"
+ 			hx-indicator=".indicator"
+		/>
+		<div id="search-results"></div>
+	</article>
+}
+
+templ MaterialGradesResults(sortedMaterial map[string][]mem.Resource) {
+	for kind, resources := range sortedMaterial {
+		<h2 class="!mt-2">{ kind }</h2>
+		<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+			for _, resource := range resources {
+				<div class="card w-full bg-base-200 shadow-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-300">
+					<div class="card-body">
+						<h3 class="card-title !mt-0 justify-between break-all">
+							{ resource.Title }
+							<div class="badge badge-secondary break-keep">
+								{ resource.Year }
+							</div>
+						</h3>
+						<p>{ resource.Summary }</p>
+						<div class="card-actions justify-between flex-nowrap">
+							<div class="inline-flex items-center justify-center place-self-center">
+								<svg xmlns="http://www.w3.org/2000/svg" class="fill-base-content mr-2" height="16" width="16" viewBox="0 0 512 512">
+									<path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"></path>
+								</svg>{ resource.School }
+							</div>
+							if resource.Comment == "" {
+								<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
+							} else {
+								<div class="tooltip tooltip-left sm:tooltip-top" data-tip={ resource.Comment }>
+									<a class="btn btn-primary" target="_blank" href={ templ.SafeURL("/files/" + resource.Grade + "/" + resource.Subject + "/" + resource.FileName) }>Öffnen!</a>
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	}
+	if len(sortedMaterial) == 0 {
+		<div role="alert" class="alert mt-2">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-primary shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+			<span>Keine Suchergebnisse!</span>
+		</div>
+	}
+}
+
+templ MaterialsContribute() {
+	<article class="prose max-w-none prose-base lg:prose-lg mb-4">
+		<a class="btn btn-error text-base" href="/materials" hx-boost="true" hx-indicator=".indicator">Zurück!</a>
+		<h2 class="!mt-2">Lernmaterialien hinzufügen</h2>
+		<p>Du möchtest dem Projekt beitragen und eigene Lernzetteln anderen zur Verfügung stellen? Perfekt!</p>
+		<p>In Zukunft wirst du hier direkt deine Materialien zur Überprüfung durch unser Team hochladen können. Bis dahin schreibe uns bitte eine E-Mail (<a class="link" href="mailto:kontakt@schulenimchaos.de">kontakt@schulenimchaos.de</a>), zu der du die Dateien anhängst und Folgendes angibst:</p>
+		<ul><li>Titel</li> <li>Eine kurze Beschreibung</li> <li>Fach</li> <li>Klassenstufe und Bundesland</li> <li>Sprache (vor allem bei bilinugualen Inhalten relevant)</li></ul>
+		<p>Bitte beachte, dass die Inhalte nicht copyright-geschützt sein dürfen, sie müssen also entweder von dir selbst erstellt oder in public domain verfügbar sein.</p>
+		<p>Danke für Deinen Beitrag!</p>
+	</article>
+}

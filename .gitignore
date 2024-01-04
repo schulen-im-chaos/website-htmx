@@ -1,12 +1,7 @@
-.DS_Store
-node_modules
-/build
-/.svelte-kit
+/bundle
+/tmp
+/web/template/*_templ.go
 /.vscode
-/package
+storage.db
 .env
-.env.*
-!.env.example
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-bun.lockb
+.DS_Store
