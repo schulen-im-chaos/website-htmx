@@ -33,15 +33,18 @@ templ MaterialGrades(kind string) {
 		</p>
 		<input
  			id="search"
- 			class="input input-bordered w-full mb-4"
+ 			class="input input-bordered w-full"
  			type="search"
  			name="q"
  			placeholder="Gib hier einen Suchbegriff ein..."
  			hx-post={ string(templ.SafeURL("/materials/kind/" + kind)) }
  			hx-trigger="input changed delay:500ms, search, load"
  			hx-target="#search-results"
- 			hx-indicator=".indicator"
+ 			hx-indicator=".htmx-indicator"
 		/>
+		<div class="label">
+			<span class="label-text-alt htmx-indicator">Lädt...</span>
+		</div>
 		<div id="search-results"></div>
 	</article>
 }

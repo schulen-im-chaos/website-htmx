@@ -47,10 +47,10 @@ templ Navbar(c *gin.Context) {
 		}
 
 		@keyframes increaseSize {
-			0% {
+			10% {
 				width: 0;
 			}
-			10% {
+			20% {
 				width: 15%;
 			}
 			100% {
@@ -130,9 +130,7 @@ templ Navbar(c *gin.Context) {
 templ a(c *gin.Context, href string, content string) {
 	<a
  		href={ templ.SafeURL(href) }
- 		if c.FullPath() == href {
-			class="active"
-		}
+ 		class={ templ.KV("active", c.FullPath() == href) }
 	>{ content }</a>
 }
 
